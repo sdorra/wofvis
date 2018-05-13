@@ -2,12 +2,6 @@
 
 
 [[projects]]
-  name = "github.com/elazarl/go-bindata-assetfs"
-  packages = ["."]
-  revision = "30f82fa23fd844bd5bb1e5f216db87fd77b5eb43"
-  version = "v1.0.0"
-
-[[projects]]
   name = "github.com/pkg/errors"
   packages = ["."]
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
@@ -36,6 +30,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "71645a94cdcb847fc3eede08ee62cbeb99c484ef06646ff51ab9278ebacedd3d"
+  inputs-digest = "959b592301b2a1a3070ab6d0d6ab068cd2187f5e33337af55e7001c512c3d5e9"
   solver-name = "gps-cdcl"
   solver-version = 1

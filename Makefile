@@ -32,7 +32,7 @@ vendor: ${GOPATH}/bin/dep
 ${GOPATH}/bin/gox:
 	@go get github.com/mitchellh/gox
 
-dist: assets ${GOPATH}/bin/gox
+dist: vendor assets ${GOPATH}/bin/gox
 	@gox -arch amd64 -os "darwin linux windows" -ldflags "-X main.Version=${VERSION}" -output dist/wofvis-${VERSION}_{{.OS}}_{{.Arch}}
 	@cd dist; shasum -a 256 * > wofvis-${VERSION}.sha256sums
 	@cd dist; find . -type f -not -name "*.sha256sums" -exec gpg -armor --detach-sig {} \;
