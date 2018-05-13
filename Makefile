@@ -1,4 +1,6 @@
 VERSION=0.1.0
+GITHUB_USER=sdorra
+GITHUB_REPO=wofvis
 
 .PHONY=build
 build: dist
@@ -34,6 +36,26 @@ dist: assets ${GOPATH}/bin/gox
 	@gox -arch amd64 -os "darwin linux windows" -ldflags "-X main.Version=${VERSION}" -output dist/wofvis-${VERSION}_{{.OS}}_{{.Arch}}
 	@cd dist; shasum -a 256 * > wofvis-${VERSION}.sha256sums
 	@cd dist; find . -type f -not -name "*.sha256sums" -exec gpg -armor --detach-sig {} \;
+
+${GOPATH}/bin/github-release:
+	@go get github.com/aktau/github-release
+
+release: ${GOPATH}/bin/github-release dist
+	@git tag -s -m "release v${VERSION}" v${VERSION}
+	@git push origin master --tags
+	@github-release release \
+  		--user ${GITHUB_USER} \
+  		--repo ${GITHUB_REPO} \
+  		--tag v${VERSION} \
+  		--name v${VERSION} \
+  		--description "release version ${VERSION}"
+  @cd dist; find . -type f -not -name "*.sha256sums" -exec github-release upload \
+                                                           		--user ${GITHUB_USER} \
+                                                           		--repo ${GITHUB_REPO} \
+                                                           		--tag v${VERSION} \
+                                                           		--file {} \;
+
+
 
 .PHONY=clean
 clean:
