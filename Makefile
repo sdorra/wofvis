@@ -49,11 +49,13 @@ release: ${GOPATH}/bin/github-release dist
   		--tag v${VERSION} \
   		--name v${VERSION} \
   		--description "release version ${VERSION}"
-  @cd dist; find . -type f -not -name "*.sha256sums" -exec github-release upload \
-                                                           		--user ${GITHUB_USER} \
-                                                           		--repo ${GITHUB_REPO} \
-                                                           		--tag v${VERSION} \
-                                                           		--file {} \;
+	@cd dist; ls -1 | xargs -n1 -I{} -- \
+	 									github-release upload \
+																	--user ${GITHUB_USER} \
+																	--repo ${GITHUB_REPO} \
+																	--tag v${VERSION} \
+																	--name {} \
+																	--file {}
 
 
 
