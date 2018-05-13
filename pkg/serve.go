@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"fmt"
+
 	"github.com/urfave/cli"
 )
 
@@ -29,5 +31,6 @@ func Serve(ctx *cli.Context) error {
 	http.Handle("/", http.FileServer(assetFS()))
 	http.HandleFunc("/nodes.json", jsonNodesHandler)
 	addr := ctx.String("addr")
+	fmt.Println("webserver is listening at", addr)
 	return http.ListenAndServe(addr, nil)
 }
