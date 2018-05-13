@@ -28,5 +28,6 @@ func jsonNodesHandler(w http.ResponseWriter, r *http.Request) {
 func Serve(ctx *cli.Context) error {
 	http.Handle("/", http.FileServer(assetFS()))
 	http.HandleFunc("/nodes.json", jsonNodesHandler)
-	return http.ListenAndServe(":8080", nil)
+	addr := ctx.String("addr")
+	return http.ListenAndServe(addr, nil)
 }

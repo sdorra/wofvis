@@ -16,8 +16,16 @@ func main() {
 	app.Commands = []cli.Command{
 		{
 			Name:   "serve",
-			Usage:  "starts a webserver and shows the usage graph",
+			Usage:  "starts a webserver and shows the web of trust graph",
 			Action: pkg.Serve,
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:   "addr",
+					Usage:  "listen address for the webserver",
+					Value:  "127.0.0.1:8080",
+					EnvVar: "WOFVIS_ADDR",
+				},
+			},
 		},
 		{
 			Name:   "json",
