@@ -1,4 +1,4 @@
-VERSION=0.1.0
+VERSION=0.1.1
 GITHUB_USER=sdorra
 GITHUB_REPO=wofvis
 
