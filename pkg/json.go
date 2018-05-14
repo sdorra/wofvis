@@ -9,7 +9,7 @@ import (
 )
 
 func PrintJSON(ctx *cli.Context) error {
-	nodes, err := createNodes()
+	nodes, err := CreateNodeFactory(ctx)()
 	if err != nil {
 		return err
 	}

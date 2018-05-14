@@ -10,8 +10,12 @@ import (
 	"github.com/urfave/cli"
 )
 
-func jsonNodesHandler(w http.ResponseWriter, r *http.Request) {
-	nodes, err := createNodes()
+type WebServer struct {
+	createNodes NodeFactory
+}
+
+func (ws *WebServer) jsonNodesHandler(w http.ResponseWriter, r *http.Request) {
+	nodes, err := ws.createNodes()
 	if err != nil {
 		http.Error(w, "failed to read nodes", 500)
 		return
@@ -28,8 +32,12 @@ func jsonNodesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Serve(ctx *cli.Context) error {
+	ws := &WebServer{
+		createNodes: CreateNodeFactory(ctx),
+	}
+
 	http.Handle("/", http.FileServer(assetFS()))
-	http.HandleFunc("/nodes.json", jsonNodesHandler)
+	http.HandleFunc("/nodes.json", ws.jsonNodesHandler)
 	addr := ctx.String("addr")
 	fmt.Println("webserver is listening at", addr)
 	return http.ListenAndServe(addr, nil)

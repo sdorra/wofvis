@@ -13,6 +13,11 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "wofvis"
 	app.Version = Version
+	app.Flags = []cli.Flag{
+		cli.BoolFlag{
+			Name: "use-openpgp-api",
+		},
+	}
 	app.Commands = []cli.Command{
 		{
 			Name:   "serve",
