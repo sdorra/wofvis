@@ -14,6 +14,11 @@ func (node *Node) addSignature(signature string) {
 	if node.SignedBy == nil {
 		node.SignedBy = make([]string, 0)
 	}
+
+	if node.ID == signature {
+		return
+	}
+
 	for _, sig := range node.SignedBy {
 		if sig == signature {
 			return
